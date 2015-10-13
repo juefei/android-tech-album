@@ -18,6 +18,7 @@
    另一个是bg_non_interactive，路径为/dev/cpuctl/apps/bg_non_interactive。
     
 * app的cpu.share
+
     1.apps下的cpu.share值为1024：
     
         shell@trltechn:/dev/cpuctl/apps $ cat cpu.shares                               
