@@ -29,14 +29,14 @@
 ## 统一app线程池
 
 * 对外提供统一的线程池工厂类。
-![image](https://raw.githubusercontent.com/juefei/android-tech-album/master/asyncTask/globalThreadPool.png)
+![image](https://raw.githubusercontent.com/juefei/android-tech-album/master/异步框架asyncTask优化/globalThreadPool.png)
 
 * 针对引入外部三方库，其中使用系统asyncTask，内置线程池不易更改，apk启动时进行hook。
-![image](https://raw.githubusercontent.com/juefei/android-tech-album/master/asyncTask/asyncTaskHook.png)
+![image](https://raw.githubusercontent.com/juefei/android-tech-album/master/异步框架asyncTask优化/asyncTaskHook.png)
 
 * 针对后台耗时任务且与UI线程有交互的情形，封装统一的TMAsyncTask供业务方使用。无需关心线程池，只需关注自己的业务逻辑实现。后面将详述。
 * 针对简单的任务，无需关心结果，封装统一的TExecutor供业务方使用，支持UI线程，非UI线程，延迟执行等功能。
-![image](https://raw.githubusercontent.com/juefei/android-tech-album/master/asyncTask/simpleTask.png)
+![image](https://raw.githubusercontent.com/juefei/android-tech-album/master/异步框架asyncTask优化/simpleTask.png)
 
 ## AsyncTask功能增强   
 &emsp;&emsp;基于使用系统asyncTask存在的问题，改进点如下：
@@ -44,10 +44,10 @@
  * 任务串行执行改为并发执行，显著提升任务执行效率.
  * 扩大待执行的tasks队列长度.
  * 优化异常处理策略：采取抛弃队列中最老一个task，执行刚加入的最新task。不直接抛出异常导致程序挂掉。
-![image](https://raw.githubusercontent.com/juefei/android-tech-album/master/asyncTask/asyncTaskException.png)
+![image](https://raw.githubusercontent.com/juefei/android-tech-album/master/异步框架asyncTask优化/asyncTaskException.png)
 
  * 增加线程检测保护，构造函数和execute必须UI线程。
-![image](https://raw.githubusercontent.com/juefei/android-tech-album/master/asyncTask/asyncTaskExecute.png)
+![image](https://raw.githubusercontent.com/juefei/android-tech-album/master/异步框架asyncTask优化/asyncTaskExecute.png)
 
  * 增加性能埋点，可在数据统计平台查看。主要植入四个监控点：
         
@@ -55,6 +55,6 @@
         doInBackground 非UI线程耗时逻辑
         onPostExecute UI执行结果
         rejectedExecution 执行异常信息
-![image](https://raw.githubusercontent.com/juefei/android-tech-album/master/asyncTask/asyncTaskMonitor.png)
+![image](https://raw.githubusercontent.com/juefei/android-tech-album/master/异步框架asyncTask优化/asyncTaskMonitor.png)
     
 &emsp;&emsp;TMAsyncTask的使用跟系统原生AsyncTask保持一致，从而在基础框架层所做优化最大限度减少业务方迁移成本。
